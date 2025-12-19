@@ -1,0 +1,111 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llmkit"
+version = "0.1.0"
+description = "Unified toolkit for managing and using multiple LLM providers with automatic model detection"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+keywords = ["llm", "openai", "claude", "gemini", "ollama", "ai", "model-manager"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+# 필수 의존성 (핵심 Provider 포함)
+dependencies = [
+    "httpx>=0.24.0",  # HTTP 클라이언트
+    "python-dotenv>=1.0.0",  # .env 파일 로드
+    "openai>=1.0.0",  # OpenAI SDK (기본 포함)
+    "anthropic>=0.18.0",  # Anthropic Claude SDK (기본 포함)
+    "rich>=13.0.0",  # 터미널 UI
+]
+
+# 선택적 의존성
+[project.optional-dependencies]
+# Google Gemini 사용
+gemini = [
+    "google-generativeai>=0.3.0",
+]
+
+# Ollama 사용 (로컬 모델)
+ollama = [
+    "ollama>=0.1.0",
+]
+
+# 모든 Provider 사용 (Gemini + Ollama 추가)
+all = [
+    "google-generativeai>=0.3.0",
+    "ollama>=0.1.0",
+]
+
+# 개발 도구
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/llmkit"
+Documentation = "https://github.com/yourusername/llmkit#readme"
+Repository = "https://github.com/yourusername/llmkit"
+"Bug Tracker" = "https://github.com/yourusername/llmkit/issues"
+
+# CLI 진입점
+[project.scripts]
+llmkit = "llmkit.cli:main"
+llmkit-welcome = "llmkit.scripts.welcome:main"
+
+# setuptools 설정 (src layout)
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["llmkit", "llmkit.utils"]
+
+[tool.setuptools.package-data]
+llmkit = ["data/*.json"]
+
+# Ruff 설정 (linter/formatter)
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["E501"]  # line too long
+
+# Black 설정 (formatter)
+[tool.black]
+line-length = 100
+target-version = ["py311", "py312"]
+
+# MyPy 설정 (type checker)
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+
+# Pytest 설정
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=llmkit --cov-report=html --cov-report=term"
+asyncio_mode = "auto"
