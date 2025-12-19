@@ -2,8 +2,8 @@
 Vision Embeddings
 이미지 임베딩 및 멀티모달 임베딩
 """
-from typing import List, Union, Optional
 from pathlib import Path
+from typing import List, Optional, Union
 
 from .embeddings import BaseEmbedding
 
@@ -46,8 +46,8 @@ class CLIPEmbedding(BaseEmbedding):
         """모델 로드 (lazy loading)"""
         if self._model is None:
             try:
-                from transformers import CLIPProcessor, CLIPModel
                 import torch
+                from transformers import CLIPModel, CLIPProcessor
             except ImportError:
                 raise ImportError(
                     "transformers 및 torch 필요:\n"
@@ -110,8 +110,8 @@ class CLIPEmbedding(BaseEmbedding):
         self._load_model()
 
         try:
-            from PIL import Image
             import torch
+            from PIL import Image
         except ImportError:
             raise ImportError(
                 "Pillow 필요:\n"

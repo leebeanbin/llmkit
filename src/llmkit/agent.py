@@ -4,8 +4,8 @@ Agent - ReAct Pattern Implementation
 """
 import json
 import re
-from typing import List, Dict, Any, Optional
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional
 
 from .client import Client
 from .tools import Tool, ToolRegistry

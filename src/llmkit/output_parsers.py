@@ -4,10 +4,10 @@ LLM 출력을 구조화된 데이터로 변환
 """
 import json
 import re
-from typing import Any, Dict, List, Optional, Type, TypeVar, Union
 from abc import ABC, abstractmethod
 from datetime import datetime
 from enum import Enum
+from typing import Any, Dict, List, Optional, Type, TypeVar
 
 try:
     from pydantic import BaseModel, ValidationError

@@ -2,15 +2,16 @@
 Interaction Patterns
 터미널 UI 패턴
 """
-from typing import Optional, List, Dict, Any
+from typing import Any, Dict, List, Optional
+
+from rich import box
 from rich.console import Console
 from rich.panel import Panel
 from rich.text import Text
-from rich.table import Table
-from rich import box
-from .design_tokens import tokens
-from .components import Badge, StatusIcon, Divider
+
+from .components import StatusIcon
 from .console import get_console
+from .design_tokens import tokens
 
 
 class SuccessPattern:
@@ -149,7 +150,7 @@ class EmptyStatePattern:
         content.append(f"\n\n{message}", style="dim")
         
         if suggestion:
-            content.append(f"\n\n💡 ", style="yellow")
+            content.append("\n\n💡 ", style="yellow")
             content.append(suggestion, style="yellow")
         
         panel = Panel(

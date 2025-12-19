@@ -47,16 +47,15 @@ References:
 Author: LLMKit Team
 """
 
-import io
-import os
-import base64
-import wave
-import tempfile
-from typing import Optional, List, Dict, Any, Union, BinaryIO
-from dataclasses import dataclass, field
-from pathlib import Path
-from enum import Enum
 import asyncio
+import base64
+import os
+import tempfile
+import wave
+from dataclasses import dataclass, field
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Union
 
 try:
     import numpy as np

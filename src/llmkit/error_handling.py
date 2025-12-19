@@ -5,16 +5,14 @@ llmkit.error_handling - Advanced Error Handling
 이 모듈은 프로덕션급 에러 처리를 제공합니다.
 """
 
-from typing import Optional, Callable, Any, Type, List, Dict
-from dataclasses import dataclass, field
-from abc import ABC, abstractmethod
-from enum import Enum
-import time
 import random
 import threading
-from functools import wraps
+import time
 from collections import deque
-
+from dataclasses import dataclass, field
+from enum import Enum
+from functools import wraps
+from typing import Any, Callable, Dict, List, Optional
 
 # ===== Exceptions =====
 
@@ -303,7 +301,7 @@ class CircuitBreaker:
             self._record_success()
             return result
 
-        except Exception as e:
+        except Exception:
             self._record_failure()
             raise
 

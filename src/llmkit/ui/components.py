@@ -2,13 +2,14 @@
 CLI/TUI Components
 터미널 UI 컴포넌트
 """
-from typing import Optional, List, Any
+from typing import Optional
+
+from rich import box
 from rich.console import Console
 from rich.panel import Panel
+from rich.progress import BarColumn, Progress, SpinnerColumn, TextColumn
 from rich.text import Text
-from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn
-from rich.table import Table
-from rich import box
+
 from .design_tokens import tokens
 
 

@@ -4,8 +4,9 @@ Metadata Inferrer
 """
 
 import re
-from typing import Dict, List, Optional
 from datetime import datetime
+from typing import Dict
+
 from .utils.logger import get_logger
 
 logger = get_logger(__name__)

@@ -25,10 +25,9 @@ References:
 Author: LLMKit Team
 """
 
-from typing import Optional, List, Dict, Any, Union
-from dataclasses import dataclass, field
-from enum import Enum
 import warnings
+from dataclasses import dataclass
+from typing import Dict, List, Optional
 
 try:
     import tiktoken

@@ -2,9 +2,8 @@
 Text Splitters - Smart Defaults, Pythonic
 llmkit 방식: 자동 최적화 + 간단한 API
 """
-from typing import List, Optional, Callable, Any
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from typing import Callable, List, Optional
 
 from .document_loaders import Document
 from .utils.logger import get_logger

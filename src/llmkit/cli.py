@@ -2,31 +2,22 @@
 CLI Tool - Beautiful Terminal UI
 터미널 디자인 시스템 적용
 """
+import asyncio
 import json
 import sys
-import asyncio
-from typing import Optional
 
-from rich.console import Console
-from rich.table import Table
 from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn
-from rich.prompt import Confirm, Prompt
-from rich import print as rprint
-from rich.tree import Tree
 from rich.syntax import Syntax
+from rich.table import Table
+from rich.tree import Tree
 
-from .registry import get_model_registry
 from .hybrid_manager import create_hybrid_manager
+from .registry import get_model_registry
 from .ui import (
+    ErrorPattern,
     get_console,
     print_logo,
-    SuccessPattern,
-    ErrorPattern,
-    InfoPattern,
-    CommandBlock,
-    Badge,
-    StatusIcon
 )
 
 console = get_console()

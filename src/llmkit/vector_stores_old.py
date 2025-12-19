@@ -2,12 +2,11 @@
 Vector Stores - Unified interface for vector databases
 llmkit 방식: Client와 같은 패턴, Fluent API
 """
-import os
 import asyncio
+import os
 from abc import ABC, abstractmethod
-from typing import List, Dict, Any, Optional, Union, Tuple
-from pathlib import Path
 from dataclasses import dataclass
+from typing import Any, Dict, List, Optional, Tuple
 
 from .document_loaders import Document
 
@@ -730,7 +729,7 @@ class QdrantVectorStore(BaseVectorStore):
 
         try:
             from qdrant_client import QdrantClient
-            from qdrant_client.models import Distance, VectorParams, PointStruct
+            from qdrant_client.models import Distance, PointStruct, VectorParams
         except ImportError:
             raise ImportError(
                 "Qdrant not installed. "

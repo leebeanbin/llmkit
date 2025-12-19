@@ -4,10 +4,10 @@ LLM Providers Package
 """
 
 from .base_provider import BaseLLMProvider, LLMResponse
-from .openai_provider import OpenAIProvider
 from .claude_provider import ClaudeProvider
-from .ollama_provider import OllamaProvider
 from .gemini_provider import GeminiProvider
+from .ollama_provider import OllamaProvider
+from .openai_provider import OpenAIProvider
 from .provider_factory import ProviderFactory
 
 __all__ = [

@@ -6,6 +6,7 @@ import asyncio
 import time
 from functools import wraps
 from typing import Callable, Tuple, Type
+
 from .logger import get_logger
 
 logger = get_logger(__name__)

@@ -45,21 +45,29 @@ References:
 Author: LLMKit Team
 """
 
+import asyncio
 import inspect
 import json
 import time
-import asyncio
-from typing import (
-    Any, Callable, Dict, List, Optional, Union,
-    Type, get_type_hints, get_origin, get_args
-)
 from dataclasses import dataclass, field
 from enum import Enum
 from functools import wraps
-import requests
-from pydantic import BaseModel, Field, validator
-import httpx
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    List,
+    Optional,
+    Type,
+    Union,
+    get_args,
+    get_origin,
+    get_type_hints,
+)
 
+import httpx
+import requests
+from pydantic import BaseModel
 
 # ============================================================================
 # Part 1: Dynamic Schema Generation
@@ -410,7 +418,7 @@ class ExternalAPITool:
                 response.raise_for_status()
                 return response.json()
 
-            except requests.RequestException as e:
+            except requests.RequestException:
                 if attempt == self.config.max_retries - 1:
                     raise
 
@@ -460,7 +468,7 @@ class ExternalAPITool:
                     response.raise_for_status()
                     return response.json()
 
-                except httpx.HTTPError as e:
+                except httpx.HTTPError:
                     if attempt == self.config.max_retries - 1:
                         raise
 

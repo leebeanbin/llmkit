@@ -2,14 +2,13 @@
 Hybrid Model Manager
 API 스캔 + 로컬 메타데이터 + 패턴 추론 통합
 """
-import asyncio
-from typing import Dict, List, Optional, Set
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from datetime import datetime
+from typing import Dict, List, Optional
 
-from .scanner import ModelScanner, ScannedModel
 from .inferrer import MetadataInferrer
 from .models import MODELS
+from .scanner import ModelScanner
 from .utils.logger import get_logger
 
 logger = get_logger(__name__)

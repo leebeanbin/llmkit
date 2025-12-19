@@ -2,9 +2,8 @@
 RAG Debug Utils - RAG 파이프라인 디버깅 및 검증 도구
 중간 과정을 확인하고 문제를 찾는 데 도움
 """
-import os
-from typing import List, Dict, Any, Optional, Tuple
 from dataclasses import dataclass
+from typing import Any, Dict, List, Optional, Tuple
 
 try:
     import numpy as np
@@ -114,7 +113,7 @@ class RAGDebugger:
         )
 
         self._print(f"\n{'='*60}")
-        self._print(f"📊 Embedding 정보")
+        self._print("📊 Embedding 정보")
         self._print(f"{'='*60}")
         self._print(f"텍스트: {text[:100]}...")
         self._print(f"차원: {dimension}")
@@ -143,7 +142,7 @@ class RAGDebugger:
             ])
         """
         self._print(f"\n{'='*60}")
-        self._print(f"📊 Embeddings 비교")
+        self._print("📊 Embeddings 비교")
         self._print(f"{'='*60}")
 
         # 각 임베딩 기본 정보
@@ -156,7 +155,7 @@ class RAGDebugger:
 
         # 유사도 매트릭스
         self._print(f"\n{'='*60}")
-        self._print(f"유사도 매트릭스 (Cosine Similarity):")
+        self._print("유사도 매트릭스 (Cosine Similarity):")
         self._print(f"{'='*60}")
 
         texts = [t for t, _ in embeddings]
@@ -246,7 +245,7 @@ class RAGDebugger:
         )
 
         self._print(f"\n{'='*60}")
-        self._print(f"📊 텍스트 유사도")
+        self._print("📊 텍스트 유사도")
         self._print(f"{'='*60}")
         self._print(f"텍스트 1: {text1[:50]}...")
         self._print(f"텍스트 2: {text2[:50]}...")
@@ -294,7 +293,7 @@ class RAGDebugger:
         }
 
         self._print(f"\n{'='*60}")
-        self._print(f"📄 청크 정보")
+        self._print("📄 청크 정보")
         self._print(f"{'='*60}")
         self._print(f"총 청크 수: {total_chunks}")
         self._print(f"평균 길이: {avg_length:.1f} 문자")
@@ -333,7 +332,7 @@ class RAGDebugger:
             검색 결과
         """
         self._print(f"\n{'='*60}")
-        self._print(f"🔍 Vector Store 검사")
+        self._print("🔍 Vector Store 검사")
         self._print(f"{'='*60}")
 
         results = {}
@@ -398,7 +397,7 @@ class RAGDebugger:
             전체 검증 결과
         """
         self._print(f"\n{'#'*60}")
-        self._print(f"# RAG 파이프라인 전체 검증")
+        self._print("# RAG 파이프라인 전체 검증")
         self._print(f"{'#'*60}\n")
 
         report = {}
@@ -430,7 +429,7 @@ class RAGDebugger:
 
         # 5. 종합 평가
         self._print(f"\n{'='*60}")
-        self._print(f"📊 종합 평가")
+        self._print("📊 종합 평가")
         self._print(f"{'='*60}")
 
         issues = []
@@ -562,8 +561,8 @@ def visualize_embeddings_2d(
         visualize_embeddings_2d(texts, embed_func)
     """
     try:
-        from sklearn.manifold import TSNE
         import matplotlib.pyplot as plt
+        from sklearn.manifold import TSNE
     except ImportError:
         print("⚠️  sklearn과 matplotlib 필요:")
         print("   pip install scikit-learn matplotlib")

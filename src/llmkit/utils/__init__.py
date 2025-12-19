@@ -4,9 +4,9 @@ Utilities
 """
 
 from .config import EnvConfig
-from .exceptions import ProviderError, ModelNotFoundError, RateLimitError
-from .retry import retry
+from .exceptions import ModelNotFoundError, ProviderError, RateLimitError
 from .logger import get_logger
+from .retry import retry
 
 __all__ = [
     "EnvConfig",

@@ -2,7 +2,7 @@
 Advanced search algorithms
 Hybrid, MMR, Re-ranking 등
 """
-from typing import List, Dict, Any, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 from .base import VectorSearchResult
 

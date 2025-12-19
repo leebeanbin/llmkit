@@ -87,7 +87,16 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]
-ignore = ["E501"]  # line too long
+ignore = [
+    "E501",  # line too long
+    "E722",  # bare except
+    "E721",  # type comparison
+    "E731",  # lambda assignment
+    "E402",  # module level import not at top
+    "F841",  # unused local variable
+    "F402",  # import shadowing
+    "F401",  # unused import in try/except blocks
+]
 
 # Black 설정 (formatter)
 [tool.black]

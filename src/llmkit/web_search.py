@@ -44,18 +44,16 @@ References:
 Author: LLMKit Team
 """
 
-import re
-import time
 import asyncio
-from typing import List, Optional, Dict, Any, Union
+import time
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime
 from enum import Enum
+from typing import Any, Dict, List, Optional
+
+import httpx
 import requests
 from bs4 import BeautifulSoup
-import httpx
-from urllib.parse import urlencode, quote_plus
-
 
 # ============================================================================
 # Part 1: Search Result Data Structures

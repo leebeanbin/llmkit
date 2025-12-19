@@ -2,25 +2,23 @@
 StateGraph - LangGraph-style TypedDict State + Checkpointing
 타입 안전 상태 관리 및 체크포인팅 지원
 """
-import json
 import copy
+import json
+from dataclasses import dataclass, field
+from datetime import datetime
+from pathlib import Path
 from typing import (
+    Any,
+    Callable,
     Dict,
     List,
-    Callable,
     Optional,
-    Any,
     TypeVar,
     Union,
-    get_type_hints,
+    get_args,
     get_origin,
-    get_args
+    get_type_hints,
 )
-from typing_extensions import TypedDict
-from dataclasses import dataclass, field
-from pathlib import Path
-from datetime import datetime
-
 
 # Type variables
 StateType = TypeVar('StateType', bound=Dict[str, Any])
@@ -441,7 +439,7 @@ class StateGraph:
             iteration += 1
 
         if iteration >= self.config.max_iterations:
-            raise RuntimeError(f"Max iterations reached")
+            raise RuntimeError("Max iterations reached")
 
     def get_execution_history(self, execution_id: Optional[str] = None) -> List[GraphExecution]:
         """실행 기록 조회"""

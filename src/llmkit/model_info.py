@@ -3,8 +3,9 @@ Model Information
 모델 정보 데이터 클래스
 """
 from dataclasses import dataclass, field
-from typing import List, Optional, Any, Dict
 from enum import Enum
+from typing import Any, List, Optional
+
 
 class ModelStatus(str, Enum):
     ACTIVE = "active"

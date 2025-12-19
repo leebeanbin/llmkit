@@ -3,18 +3,20 @@ Ollama Provider
 Ollama API 통합 (최신 SDK: ollama 패키지의 AsyncClient 사용)
 """
 
-from typing import AsyncGenerator, List, Dict, Optional
-from ollama import AsyncClient
-
 # 독립적인 utils 사용
 import sys
 from pathlib import Path
+from typing import AsyncGenerator, Dict, List, Optional
+
+from ollama import AsyncClient
+
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from utils.config import EnvConfig
 from utils.exceptions import ProviderError
-from utils.retry import retry
 from utils.logger import get_logger
+from utils.retry import retry
+
 from .base_provider import BaseLLMProvider, LLMResponse
 
 logger = get_logger(__name__)

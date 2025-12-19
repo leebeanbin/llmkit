@@ -3,11 +3,11 @@ Vision Document Loaders
 이미지 및 멀티모달 문서 로딩
 """
 import base64
-from typing import List, Optional, Union
+from dataclasses import dataclass
 from pathlib import Path
-from dataclasses import dataclass, field
+from typing import List, Optional, Union
 
-from .document_loaders import Document, BaseDocumentLoader
+from .document_loaders import BaseDocumentLoader, Document
 
 
 @dataclass
@@ -126,8 +126,8 @@ class ImageLoader(BaseDocumentLoader):
     def _generate_caption(self, image_path: Path) -> str:
         """이미지 캡션 자동 생성"""
         try:
-            from transformers import BlipProcessor, BlipForConditionalGeneration
             from PIL import Image
+            from transformers import BlipForConditionalGeneration, BlipProcessor
         except ImportError:
             raise ImportError(
                 "transformers 및 Pillow 필요:\n"

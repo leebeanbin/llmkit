@@ -2,8 +2,9 @@
 Console Utilities
 터미널 콘솔 유틸리티
 """
-from rich.console import Console
 from typing import Optional
+
+from rich.console import Console
 
 # 전역 Console 인스턴스
 _console: Optional[Console] = None

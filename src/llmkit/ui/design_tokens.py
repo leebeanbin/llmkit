@@ -3,7 +3,6 @@ Design Tokens for Terminal UI
 터미널 친화적인 디자인 토큰 정의
 """
 from dataclasses import dataclass
-from typing import Dict
 
 
 @dataclass

@@ -5,14 +5,12 @@ Graph System - LangGraph-style Workflow
 import asyncio
 import hashlib
 import json
-from typing import Any, Dict, List, Optional, Callable, Union, TypeVar, Set
-from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
-from datetime import datetime
+from dataclasses import dataclass, field
+from typing import Any, Callable, Dict, List, Optional, Set, TypeVar, Union
 
-from .client import Client
 from .agent import Agent
-from .memory import BaseMemory, BufferMemory
+from .client import Client
 from .output_parsers import BaseOutputParser
 from .utils.logger import get_logger
 
@@ -862,7 +860,7 @@ class Graph:
                 if cached_result is not None:
                     update = cached_result
                     if verbose:
-                        logger.info(f"Using cached result")
+                        logger.info("Using cached result")
                 else:
                     update = await node.execute(state)
                     self.cache.set(current_node, state, update)
@@ -896,7 +894,7 @@ class Graph:
             # 다음 노드 없으면 종료
             if not next_node:
                 if verbose:
-                    logger.info(f"No next node, finishing")
+                    logger.info("No next node, finishing")
                 break
 
             current_node = next_node
@@ -923,7 +921,7 @@ class Graph:
                     lines.append(f"    └─> {next_node}")
 
             if node_name in self.conditional_edges:
-                lines.append(f"    └─> [conditional]")
+                lines.append("    └─> [conditional]")
 
         return "\n".join(lines)
 

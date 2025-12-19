@@ -3,18 +3,20 @@ Gemini Provider
 Google Gemini API 통합 (최신 SDK: google-genai 사용)
 """
 
-from typing import AsyncGenerator, List, Dict, Optional
-from google import genai
-
 # 독립적인 utils 사용
 import sys
 from pathlib import Path
+from typing import AsyncGenerator, Dict, List, Optional
+
+from google import genai
+
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from utils.config import EnvConfig
 from utils.exceptions import ProviderError
-from utils.retry import retry
 from utils.logger import get_logger
+from utils.retry import retry
+
 from .base_provider import BaseLLMProvider, LLMResponse
 
 logger = get_logger(__name__)
