@@ -1,54 +1,74 @@
-# llmkit
+# 🚀 llmkit
 
-**Unified toolkit for managing and using multiple LLM providers**
+**Production-ready LLM toolkit with unified interface for multiple providers**
 
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub](https://img.shields.io/github/stars/leebeanbin/llmkit?style=social)](https://github.com/leebeanbin/llmkit)
+
+**llmkit** is a comprehensive, production-ready toolkit for building LLM applications with a unified interface across OpenAI, Anthropic, Google, and Ollama. Write once, run everywhere.
 
 ---
 
-## 🎯 Features
+## ✨ Key Features
 
-- **🔄 Unified Interface**: Use OpenAI, Claude, Gemini, and Ollama with the same API
-- **📊 Model Registry**: Auto-detect available models from your API keys
-- **🎛️ Parameter Adaptation**: Automatically convert parameters for each provider
-  - `max_tokens` → `max_completion_tokens` (OpenAI GPT-5)
-  - `max_tokens` → `max_output_tokens` (Gemini)
-  - `max_tokens` → `num_predict` (Ollama)
-- **📦 Zero External Dependencies**: No `src.*` imports, fully independent
-- **🔍 CLI Tools**: Inspect models and capabilities from command line
-- **🚀 Pattern-Based Inference**: Auto-detect new model capabilities
+### 🎯 **Core Features**
+- 🔄 **Unified Interface** - Single API for OpenAI, Anthropic, Google, Ollama
+- 🎛️ **Intelligent Adaptation** - Automatic parameter conversion between providers
+- 📊 **Model Registry** - Auto-detect available models from API keys
+- 🔍 **CLI Tools** - Inspect models and capabilities from command line
+- 💰 **Cost Tracking** - Accurate token counting and cost estimation
+
+### 🏗️ **RAG & Document Processing**
+- 📄 **Document Loaders** - PDF, CSV, TXT with automatic format detection
+- ✂️ **Smart Text Splitters** - Semantic chunking with tiktoken
+- 🔍 **Vector Search** - Chroma, FAISS, Pinecone, Qdrant, Weaviate
+- 🎯 **RAG Pipeline** - Complete question-answering system in one line
+- 🐛 **RAG Debugging** - Comprehensive debugging toolkit
+
+### 🤖 **Advanced LLM Features**
+- 🛠️ **Tools & Agents** - Function calling with ReAct pattern
+- 🧠 **Memory Systems** - Buffer, window, token-based, summary memory
+- ⛓️ **Chains** - Sequential, parallel, and custom chain composition
+- 📊 **Output Parsers** - Pydantic, JSON, datetime, enum parsing
+- 🔁 **Streaming** - Real-time response streaming with stats
+
+### 📈 **Graph & Multi-Agent**
+- 🕸️ **Graph Workflows** - LangGraph-style DAG execution
+- 🤝 **Multi-Agent** - Sequential, parallel, hierarchical, debate patterns
+- 🔄 **State Management** - Automatic state threading and checkpoints
+- 📞 **Communication** - Inter-agent message passing
+
+### 🎨 **Multimodal AI**
+- 🖼️ **Vision RAG** - Image-based question answering with CLIP
+- 🎙️ **Audio Processing** - Whisper STT, multi-provider TTS
+- 🔊 **Audio RAG** - Search and QA across audio files
+- 🌐 **Web Search** - Google, Bing, DuckDuckGo integration
+- 🧮 **ML Integration** - TensorFlow, PyTorch, Scikit-learn
+
+### 🏭 **Production Features**
+- 💵 **Token & Cost** - tiktoken-based accurate counting, cost optimization
+- 📝 **Prompt Templates** - Few-shot, chat, chain-of-thought templates
+- 📊 **Evaluation** - BLEU, ROUGE, LLM-as-Judge, RAG metrics
+- 🎯 **Fine-tuning** - OpenAI fine-tuning API integration
+- 🛡️ **Error Handling** - Retry, circuit breaker, rate limiting
+- 📈 **Tracing** - Distributed tracing with OpenTelemetry export
 
 ---
 
 ## 📦 Installation
 
-### Quick Start (Recommended) ⭐
+### Quick Start
 
 ```bash
 pip install llmkit
 ```
 
-**What's included by default:**
-- ✅ Model registry and CLI tools
-- ✅ **OpenAI** SDK (GPT-4, GPT-5, etc.)
-- ✅ **Anthropic** SDK (Claude 3.5, etc.)
+**Included by default:**
+- ✅ OpenAI SDK (GPT-4o, o1, etc.)
+- ✅ Anthropic SDK (Claude 3.5, etc.)
 
-**Optional providers:**
-- Gemini and Ollama are optional (see below)
-
-This covers the most commonly used providers out of the box!
-
-**After installation, see the welcome message:**
-```bash
-python -m llmkit.scripts.welcome
-# or
-python scripts/welcome.py
-```
-
----
-
-### Install Additional Providers
+### Optional Providers
 
 ```bash
 # Add Gemini support
@@ -57,363 +77,508 @@ pip install llmkit[gemini]
 # Add Ollama support (local models)
 pip install llmkit[ollama]
 
-# Install all providers (Gemini + Ollama)
+# Install all providers
 pip install llmkit[all]
-```
 
----
-
-### Installation Guide
-
-| Command | OpenAI | Claude | Gemini | Ollama |
-|---------|--------|--------|--------|--------|
-| `pip install llmkit` | ✅ | ✅ | ❌ | ❌ |
-| `pip install llmkit[gemini]` | ✅ | ✅ | ✅ | ❌ |
-| `pip install llmkit[ollama]` | ✅ | ✅ | ❌ | ✅ |
-| `pip install llmkit[all]` | ✅ | ✅ | ✅ | ✅ |
-
-💡 **Tip:** If you try to use a provider without its SDK, llmkit will show you a helpful install message!
-
-### Development Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/llmkit.git
-cd llmkit
-
-# Install in editable mode with dev dependencies
-pip install -e ".[dev,all]"
+# Development installation
+pip install llmkit[dev,all]
 ```
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. Set up environment variables
+### Environment Setup
 
 ```bash
-# .env file or export
+# Create .env file
 export OPENAI_API_KEY="your-key"
 export ANTHROPIC_API_KEY="your-key"
 export GEMINI_API_KEY="your-key"
 export OLLAMA_HOST="http://localhost:11434"
 ```
 
-### 2. Python Usage
+### Basic Usage
 
 ```python
-from llmkit import get_registry
+from llmkit import Client
 
-# Get model registry
-registry = get_registry()
+# Unified interface - works with any provider
+client = Client(model="gpt-4o")
+response = client.chat("Explain quantum computing in simple terms")
+print(response.content)
 
-# Check active providers
-active_providers = registry.get_active_providers()
-print(f"Active: {[p.name for p in active_providers]}")
-# → Active: ['openai', 'ollama']
+# Switch providers seamlessly
+client = Client(model="claude-3-5-sonnet-20241022")
+response = client.chat("Same question, different provider")
 
-# Get available models
-models = registry.get_available_models()
-for model in models:
-    print(f"{model.model_name} ({model.provider})")
-# → gpt-4o (openai)
-# → gpt-4o-mini (openai)
-# → claude-3-5-sonnet-20241022 (anthropic)
-# → ...
-
-# Get model info
-model_info = registry.get_model_info("gpt-4o-mini")
-print(f"Streaming: {model_info.supports_streaming}")
-print(f"Temperature: {model_info.supports_temperature}")
-print(f"Max Tokens: {model_info.supports_max_tokens}")
+# Streaming
+for chunk in client.stream("Tell me a story"):
+    print(chunk.content, end="", flush=True)
 ```
 
-### 3. CLI Usage
+### RAG in One Line
+
+```python
+from llmkit import RAGChain
+
+# Create RAG system from documents
+rag = RAGChain.from_documents("docs/")
+
+# Ask questions
+answer = rag.query("What is this document about?")
+print(answer)
+
+# With sources
+answer, sources = rag.query("Explain the main concept", include_sources=True)
+for source in sources:
+    print(f"Source: {source.document.metadata['source']}")
+```
+
+### Cost Optimization
+
+```python
+from llmkit import count_tokens, estimate_cost, get_cheapest_model
+
+# Count tokens
+tokens = count_tokens("Your text here", model="gpt-4o")
+print(f"Tokens: {tokens}")
+
+# Estimate cost
+cost = estimate_cost(
+    input_text="Your prompt",
+    output_text="Expected response",
+    model="gpt-4o"
+)
+print(f"Cost: ${cost.total_cost:.4f}")
+
+# Find cheapest model
+cheapest = get_cheapest_model(
+    input_text="Your prompt",
+    output_tokens=1000,
+    models=["gpt-4o", "gpt-4o-mini", "claude-3-5-sonnet"]
+)
+print(f"Use: {cheapest}")
+```
+
+---
+
+## 📚 Core Modules
+
+### 1. Client & Adapters
+
+Unified interface with automatic parameter adaptation:
+
+```python
+from llmkit import Client, adapt_parameters
+
+# Works across all providers
+client = Client(model="gpt-4o")
+
+# Parameters automatically adapted
+response = client.chat(
+    "Hello",
+    temperature=0.7,
+    max_tokens=1000,  # → max_completion_tokens for GPT-5
+                       # → max_output_tokens for Gemini
+                       # → num_predict for Ollama
+)
+```
+
+### 2. Document Processing
+
+```python
+from llmkit import DocumentLoader, RecursiveCharacterTextSplitter
+
+# Load documents
+docs = DocumentLoader.load("docs/")  # PDF, CSV, TXT
+
+# Smart splitting
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=500,
+    chunk_overlap=50,
+    separators=["\n\n", "\n", " "]
+)
+chunks = splitter.split_documents(docs)
+```
+
+### 3. Embeddings & Vector Stores
+
+```python
+from llmkit import OpenAIEmbedding, ChromaVectorStore
+
+# Create embeddings
+embedding = OpenAIEmbedding(model="text-embedding-3-small")
+
+# Vector store
+store = ChromaVectorStore.from_documents(
+    documents=chunks,
+    embedding=embedding,
+    persist_directory="./chroma_db"
+)
+
+# Search
+results = store.similarity_search("query", k=5)
+
+# MMR search (diversity)
+diverse_results = store.mmr_search("query", k=5, lambda_mult=0.5)
+```
+
+### 4. Tools & Agents
+
+```python
+from llmkit import Agent, Tool
+
+# Define tools
+@Tool.from_function
+def calculator(expression: str) -> str:
+    """Evaluate a math expression"""
+    return str(eval(expression))
+
+@Tool.from_function
+def search(query: str) -> str:
+    """Search the web"""
+    # ... web search logic
+    return results
+
+# Create agent
+agent = Agent(
+    llm=client,
+    tools=[calculator, search],
+    max_iterations=10
+)
+
+# Run agent
+result = agent.run("What is 25 * 17? Then search for that number in math history")
+print(result.output)
+```
+
+### 5. Memory & Chains
+
+```python
+from llmkit import BufferMemory, SequentialChain, PromptChain
+
+# Memory
+memory = BufferMemory(max_messages=10)
+memory.add_message("user", "Hello")
+memory.add_message("assistant", "Hi there!")
+
+# Chains
+analyze_chain = PromptChain(
+    llm=client,
+    template="Analyze this text: {text}"
+)
+
+summarize_chain = PromptChain(
+    llm=client,
+    template="Summarize: {analysis}"
+)
+
+# Sequential execution
+chain = SequentialChain(steps=[analyze_chain, summarize_chain])
+result = chain.run(text="Long article...")
+```
+
+### 6. Graph Workflows
+
+```python
+from llmkit import StateGraph
+
+# Create graph
+graph = StateGraph()
+
+def analyze(state):
+    state["analysis"] = client.chat(f"Analyze: {state['input']}")
+    return state
+
+def decide(state):
+    score = float(state["analysis"].split("Score:")[1])
+    return "good" if score > 0.8 else "bad"
+
+def improve(state):
+    state["output"] = client.chat(f"Improve: {state['input']}")
+    return state
+
+# Build graph
+graph.add_node("analyze", analyze)
+graph.add_node("improve", improve)
+graph.add_conditional_edges("analyze", decide, {
+    "good": "END",
+    "bad": "improve"
+})
+
+# Run
+result = graph.compile().invoke({"input": "Draft text"})
+```
+
+### 7. Multi-Agent Systems
+
+```python
+from llmkit import MultiAgentCoordinator, DebateStrategy
+
+# Create agents
+researcher = Agent(llm=client, tools=[search], role="researcher")
+writer = Agent(llm=client, role="writer")
+critic = Agent(llm=client, role="critic")
+
+# Coordinate with debate
+coordinator = MultiAgentCoordinator(
+    agents=[researcher, writer, critic],
+    strategy=DebateStrategy(rounds=3)
+)
+
+result = coordinator.coordinate("Write an article about quantum computing")
+print(result.final_output)
+```
+
+### 8. Vision RAG
+
+```python
+from llmkit import VisionRAG, CLIPEmbedding, ImageLoader
+
+# Load images
+images = ImageLoader.load("images/")
+
+# Create vision RAG
+vision_rag = VisionRAG.from_images(
+    images=images,
+    embedding=CLIPEmbedding(),
+    llm=Client(model="gpt-4o")  # Vision-capable model
+)
+
+# Query with text
+answer = vision_rag.query("What objects are in these images?")
+
+# Query with image
+answer = vision_rag.query_with_image(
+    "reference.jpg",
+    "Find similar images and describe them"
+)
+```
+
+### 9. Audio Processing
+
+```python
+from llmkit import WhisperSTT, TextToSpeech, AudioRAG
+
+# Speech to text
+stt = WhisperSTT()
+result = stt.transcribe("audio.mp3", language="en")
+print(result.text)
+
+# Text to speech
+tts = TextToSpeech(provider="openai")
+audio = tts.synthesize("Hello world", voice="alloy", speed=1.0)
+
+# Audio RAG
+audio_rag = AudioRAG.from_audio_files([
+    "podcast1.mp3",
+    "podcast2.mp3"
+])
+answer = audio_rag.query("What was discussed about AI?")
+```
+
+### 10. Web Search
+
+```python
+from llmkit import DuckDuckGoSearch, WebScraper
+
+# Search (no API key needed!)
+search = DuckDuckGoSearch()
+results = search.search("latest AI news", max_results=5)
+
+for result in results:
+    print(f"{result.title}: {result.url}")
+
+# Scrape content
+scraper = WebScraper()
+content = scraper.scrape(results[0].url)
+print(content)
+```
+
+### 11. Prompt Templates
+
+```python
+from llmkit import PromptTemplate, FewShotPromptTemplate, PredefinedTemplates
+
+# Basic template
+template = PromptTemplate(
+    template="Translate {text} from {source} to {target}",
+    input_variables=["text", "source", "target"]
+)
+prompt = template.format(text="Hello", source="English", target="Korean")
+
+# Few-shot template
+from llmkit import PromptExample
+
+examples = [
+    PromptExample(input="2+2", output="4"),
+    PromptExample(input="3*5", output="15")
+]
+
+few_shot = FewShotPromptTemplate(
+    examples=examples,
+    example_template=PromptTemplate(
+        template="Q: {input}\nA: {output}",
+        input_variables=["input", "output"]
+    ),
+    prefix="Solve the math problem:",
+    suffix="Q: {input}\nA:"
+)
+
+# Predefined templates
+cot = PredefinedTemplates.chain_of_thought()
+prompt = cot.format(question="What is 25% of 80?")
+```
+
+### 12. Evaluation
+
+```python
+from llmkit import BLEUMetric, ROUGEMetric, evaluate_text, evaluate_rag
+
+# Text evaluation
+prediction = "The cat sits on the mat"
+reference = "The cat is sitting on the mat"
+
+result = evaluate_text(
+    prediction=prediction,
+    reference=reference,
+    metrics=["bleu", "rouge-1", "rouge-l", "f1"]
+)
+print(f"Average score: {result.average_score:.4f}")
+
+# RAG evaluation
+rag_result = evaluate_rag(
+    question="What is AI?",
+    answer="AI is artificial intelligence...",
+    contexts=["Context 1", "Context 2"],
+    ground_truth="AI is..."
+)
+```
+
+### 13. Fine-tuning
+
+```python
+from llmkit import DatasetBuilder, FineTuningManager, create_finetuning_provider
+
+# Prepare data
+qa_pairs = [
+    {"question": "What is Python?", "answer": "Python is..."},
+    {"question": "What is a list?", "answer": "A list is..."}
+]
+
+examples = DatasetBuilder.from_qa_pairs(
+    qa_pairs,
+    system_message="You are a Python expert"
+)
+
+# Split data
+train, val = DatasetBuilder.split_dataset(examples, train_ratio=0.8)
+
+# Fine-tune
+provider = create_finetuning_provider("openai")
+manager = FineTuningManager(provider)
+
+train_file = manager.prepare_and_upload(train, "train.jsonl")
+val_file = manager.prepare_and_upload(val, "val.jsonl")
+
+job = manager.start_training(
+    model="gpt-3.5-turbo",
+    training_file=train_file,
+    validation_file=val_file,
+    n_epochs=3
+)
+```
+
+### 14. Error Handling
+
+```python
+from llmkit import retry, circuit_breaker, rate_limit, with_error_handling
+
+# Retry with exponential backoff
+@retry(max_retries=3, strategy=RetryStrategy.EXPONENTIAL)
+def api_call():
+    return client.chat("Hello")
+
+# Circuit breaker
+@circuit_breaker(failure_threshold=5, timeout=60)
+def flaky_service():
+    return external_api.call()
+
+# Rate limiting
+@rate_limit(max_calls=10, time_window=60)
+def rate_limited_call():
+    return api.call()
+
+# Combined error handling
+@with_error_handling(max_retries=3, failure_threshold=5, max_calls=10)
+def production_call():
+    return client.chat("Production query")
+```
+
+---
+
+## 🎓 Documentation & Learning
+
+### Complete Learning Path
+
+llmkit includes **comprehensive AI master's level documentation**:
+
+- **Theory Documents** (900+ lines each with mathematical proofs)
+  - Embeddings: Vector math, Word2Vec, Attention, Transformers
+  - RAG: Vector search, HNSW, MMR, hybrid search
+  - Graph Workflows: DAG, topological sort, Petri nets
+  - Multi-Agent: Game theory, consensus, debate
+  - Vision: CNN, ResNet, CLIP, vision transformers
+  - Audio: Nyquist, MFCC, CTC, Whisper, WaveNet
+  - Production: Tokenization, BLEU/ROUGE, LoRA, error handling
+
+- **Tutorials** (600+ lines each with practical examples)
+  - Step-by-step implementations
+  - Real-world use cases
+  - Performance benchmarking
+
+- **16-Week Curriculum** (`docs/LEARNING_PATH.md`)
+  - Structured learning from basics to advanced
+  - Projects and exercises
+  - Graduate-level depth
+
+See [`docs/`](docs/) directory for all materials.
+
+---
+
+## 🔧 CLI Usage
 
 ```bash
-# List all available models
+# List available models
 llmkit list
 
-# Show specific model details
-llmkit show gpt-4o-mini
+# Show model details
+llmkit show gpt-4o
 
-# List active providers
+# Check providers
 llmkit providers
 
-# Show summary
+# Quick summary
 llmkit summary
 
-# Export all model info as JSON
+# Export model info
 llmkit export > models.json
 ```
 
 ---
 
-## 📚 Detailed Usage
-
-### Model Registry
-
-```python
-from llmkit import get_registry
-
-registry = get_registry()
-
-# Get models by provider
-openai_models = registry.get_available_models(provider="openai")
-claude_models = registry.get_available_models(provider="anthropic")
-
-# Get specific model info
-model = registry.get_model_info("gpt-4o")
-if model:
-    print(f"Display Name: {model.display_name}")
-    print(f"Max Tokens: {model.max_tokens}")
-    print(f"Temperature Range: {model.default_temperature}")
-
-    # Check parameter support
-    for param in model.parameters:
-        status = "✅" if param.supported else "❌"
-        print(f"{status} {param.name}: {param.description}")
-```
-
-### Provider Information
-
-```python
-from llmkit import get_registry
-
-registry = get_registry()
-
-# Get all providers
-providers = registry.get_all_providers()
-
-for name, provider in providers.items():
-    print(f"Provider: {name}")
-    print(f"  Status: {provider.status.value}")
-    print(f"  Env Key: {provider.env_key}")
-    print(f"  Available: {provider.env_value_set}")
-    print(f"  Models: {len(provider.available_models)}")
-    print(f"  Default: {provider.default_model}")
-```
-
-### Using with Actual LLM Calls
-
-```python
-# Example with OpenAI (if you have openai installed)
-from llmkit import get_registry
-
-registry = get_registry()
-model_info = registry.get_model_info("gpt-4o-mini")
-
-# Get parameter configuration
-params = {}
-if model_info.supports_temperature:
-    params["temperature"] = 0.7
-if model_info.uses_max_completion_tokens:
-    params["max_completion_tokens"] = 1000
-elif model_info.supports_max_tokens:
-    params["max_tokens"] = 1000
-
-print(f"Using parameters: {params}")
-# → Using parameters: {'temperature': 0.7, 'max_tokens': 1000}
-```
-
----
-
-## 🔍 CLI Commands
-
-### `llmkit list`
-
-List all available models with their capabilities.
-
-```bash
-$ llmkit list
-
-활성화된 제공자: openai, ollama
-총 모델 수: 25
-
-✅ gpt-4o (openai)
-   Streaming: True
-   Temperature: True
-   Max Tokens: True
-
-✅ gpt-5-nano (openai)
-   Streaming: True
-   Temperature: False
-   Max Tokens: False
-   Uses max_completion_tokens: True
-
-✅ phi3.5 (ollama)
-   Streaming: True
-   Temperature: True
-   Max Tokens: True
-```
-
-### `llmkit show <model>`
-
-Show detailed information about a specific model.
-
-```bash
-$ llmkit show gpt-4o-mini
-
-모델: gpt-4o-mini
-제공자: openai
-설명: OpenAI의 빠르고 저렴한 모델
-
-기능:
-  - Streaming: ✅ Yes
-  - Temperature: ✅ Yes (0.0-2.0)
-  - Max Tokens: ✅ Yes (16384)
-
-파라미터:
-  ✅ temperature (float)
-     기본값: 0.0
-     필수: False
-     설명: 응답의 창의성/랜덤성 조절
-
-  ✅ max_tokens (int)
-     기본값: 16384
-     필수: False
-     설명: 생성할 최대 토큰 수
-
-사용 예제:
-[... 코드 예시 ...]
-```
-
-### `llmkit providers`
-
-Show all configured providers.
-
-```bash
-$ llmkit providers
-
-제공자 목록:
-
-✅ openai
-   상태: active
-   환경변수: OPENAI_API_KEY = 설정됨
-   사용 가능한 모델: 15
-   기본 모델: gpt-4o-mini
-
-❌ anthropic
-   상태: inactive
-   환경변수: ANTHROPIC_API_KEY = 미설정
-   사용 가능한 모델: 0
-
-✅ ollama
-   상태: active
-   환경변수: OLLAMA_HOST = 설정됨
-   사용 가능한 모델: 4
-   기본 모델: qwen2.5:7b
-```
-
-### `llmkit summary`
-
-Show quick summary.
-
-```bash
-$ llmkit summary
-
-요약 정보:
-
-총 제공자: 4
-활성화된 제공자: 2
-총 모델 수: 19
-
-활성화된 제공자: openai, ollama
-```
-
----
-
-## 🎨 Model Information Structure
-
-Each model provides detailed capability information:
-
-```python
-@dataclass
-class ModelCapabilityInfo:
-    model_name: str                    # "gpt-4o-mini"
-    display_name: str                  # "GPT-4o Mini"
-    provider: str                      # "openai"
-    model_type: str                    # "llm"
-
-    supports_streaming: bool           # True
-    supports_temperature: bool         # True
-    supports_max_tokens: bool          # True
-    uses_max_completion_tokens: bool   # False (True for GPT-5)
-
-    max_tokens: int                    # 16384
-    default_temperature: float         # 0.0
-
-    description: str                   # Model description
-    use_case: str                      # Recommended use case
-    parameters: List[ParameterInfo]    # Detailed parameter info
-    example_usage: str                 # Code examples
-```
-
----
-
-## 🔧 Configuration
-
-### Environment Variables
-
-```bash
-# OpenAI
-OPENAI_API_KEY="sk-..."
-
-# Anthropic Claude
-ANTHROPIC_API_KEY="sk-ant-..."
-
-# Google Gemini
-GEMINI_API_KEY="..."
-
-# Ollama (local)
-OLLAMA_HOST="http://localhost:11434"
-```
-
-### Using .env File
-
-```bash
-# Create .env file in your project root
-cat > .env << EOF
-OPENAI_API_KEY=your-key
-ANTHROPIC_API_KEY=your-key
-GEMINI_API_KEY=your-key
-OLLAMA_HOST=http://localhost:11434
-EOF
-```
-
-llmkit will automatically load from `.env` if `python-dotenv` is installed.
-
----
-
-## 📖 Model Support
-
-### OpenAI
-
-- ✅ GPT-4o, GPT-4o-mini, GPT-4-turbo
-- ✅ GPT-5, GPT-5-mini, GPT-5-nano (with `max_completion_tokens`)
-- ✅ GPT-4.1 series (with `max_completion_tokens`)
-- ✅ O3, O3-mini, O4-mini (reasoning models)
-- ✅ Auto-detection of new models
-- ✅ Date-versioned models (e.g., `gpt-5-nano-2025-08-07`)
-
-### Anthropic Claude
-
-- ✅ Claude 3.5 Sonnet, Claude 3 Opus, Claude 3 Haiku
-- ✅ Temperature range: 0.0-1.0 (auto-clamped)
-- ✅ Date-versioned models (e.g., `claude-3-5-sonnet-20241022`)
-
-### Google Gemini
-
-- ✅ Gemini 2.5 Flash, Gemini 2.5 Pro
-- ✅ Gemini 2.0, Gemini 1.5 series
-- ✅ `max_output_tokens` parameter
-- ✅ Thinking mode support (2.5+)
-
-### Ollama
-
-- ✅ All local models
-- ✅ `num_predict` parameter
-- ✅ Dynamic model detection
+## 🌟 Examples
+
+Check [`examples/`](examples/) directory:
+
+- `basic_usage.py` - Getting started
+- `rag_demo.py` - RAG system
+- `agent_demo.py` - Tool-using agents
+- `graph_demo.py` - Graph workflows
+- `multi_agent_demo.py` - Multi-agent systems
+- `vision_rag_demo.py` - Vision RAG
+- `audio_demo.py` - Audio processing
 
 ---
 
@@ -423,14 +588,11 @@ llmkit will automatically load from `.env` if `python-dotenv` is installed.
 # Run all tests
 pytest
 
-# Run with coverage
+# With coverage
 pytest --cov=llmkit --cov-report=html
 
-# Run specific test
-pytest tests/test_registry.py
-
-# Run async tests
-pytest tests/test_providers.py -v
+# Specific module
+pytest tests/test_rag.py -v
 ```
 
 ---
@@ -453,78 +615,63 @@ mypy llmkit
 
 ---
 
-## 📝 Examples
+## 🗺️ Roadmap
 
-See [examples/](examples/) directory for more examples:
-
-- [`basic_usage.py`](examples/basic_usage.py) - Basic registry usage
-- [`check_providers.py`](examples/check_providers.py) - Check active providers
-- [`model_params.py`](examples/model_params.py) - Get model parameters
-- [`test_import.py`](examples/test_import.py) - Test package import
+- ✅ Unified multi-provider interface
+- ✅ RAG pipeline
+- ✅ Tools & Agents
+- ✅ Graph workflows
+- ✅ Multi-agent systems
+- ✅ Vision & Audio
+- ✅ Production features
+- ⬜ LangSmith integration
+- ⬜ Prompt optimization
+- ⬜ Model benchmarks
+- ⬜ Web dashboard
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions welcome! Please:
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
 ## 🙏 Acknowledgments
 
-llmkit은 다음 프로젝트들에서 영감을 받았습니다:
+Inspired by:
+- **[LangChain](https://github.com/langchain-ai/langchain)** - LLM application framework
+- **[LangGraph](https://github.com/langchain-ai/langgraph)** - Graph workflow patterns
+- **[Anthropic Claude](https://www.anthropic.com/)** - Clear code philosophy
 
-### 참고한 프로젝트
-
-- **[LangChain](https://github.com/langchain-ai/langchain)**: LLM 애플리케이션 개발 프레임워크의 선구자. 체인, 에이전트, 메모리 등의 개념을 참고했습니다.
-- **[Claude (Anthropic)](https://www.anthropic.com/)**: 명확하고 간결한 코드 작성 철학의 영감을 받았습니다. 모토 "Claude Code"는 여기서 유래했습니다.
-- **[TeddyNote](https://github.com/teddynote/teddynote)**: 터미널 UI 디자인과 사용자 경험에 대한 인사이트를 제공했습니다.
-
-### 라이센스
-
-이 프로젝트는 MIT 라이센스 하에 배포됩니다. 참고한 프로젝트들의 라이센스:
-- LangChain: MIT License
-- Claude API: Anthropic의 API 서비스 약관
-- TeddyNote: 해당 프로젝트의 라이센스 정책
-
-### 감사의 말
-
-- OpenAI for GPT models
+Special thanks to:
+- OpenAI for GPT models and APIs
 - Anthropic for Claude API
 - Google for Gemini API
 - Ollama team for local LLM support
-- Rich library for beautiful terminal UI
 
 ---
 
 ## 📧 Contact
 
-- Issues: https://github.com/yourusername/llmkit/issues
-- Discussions: https://github.com/yourusername/llmkit/discussions
+- **GitHub**: https://github.com/leebeanbin/llmkit
+- **Issues**: https://github.com/leebeanbin/llmkit/issues
+- **Discussions**: https://github.com/leebeanbin/llmkit/discussions
 
 ---
 
-## 🗺️ Roadmap
+**Built with ❤️ for the LLM community**
 
-- [ ] Automatic model metadata updates (LLM-assisted)
-- [ ] Unified LLM interface (single API for all providers)
-- [ ] Parameter adapter (auto-convert parameters)
-- [ ] Model performance benchmarks
-- [ ] Integration with LangChain
-- [ ] Web dashboard
-
----
-
-**Made with ❤️ for the LLM community**
+Transform your LLM applications from prototype to production with llmkit.
